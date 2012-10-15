@@ -6,8 +6,8 @@ QT += opengl
 
 TEMPLATE = app
 TARGET = 
-DEPENDPATH += . include interface src src/engine
-INCLUDEPATH += . include interface src
+DEPENDPATH += . include interface src src/engine 
+INCLUDEPATH += . include interface src src/include
 
 # Input
 HEADERS += include/base.h \
@@ -17,7 +17,8 @@ HEADERS += include/base.h \
            interface/input.h \
            interface/sound.h \
            interface/timer.h \
-		   src/blob.h
+		   src/include/blob.h
+
 SOURCES += src/blob.cpp \
            src/game.cpp \
            src/player.cpp \

@@ -112,7 +112,6 @@ void CEngine::Main()
 	window.raise(); // Bring to front
 
 	//Script()->PostInit();
-	
 
     //while ( !window.shouldClose() )
 	while (window.isVisible()) 

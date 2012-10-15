@@ -17,6 +17,7 @@ HEADERS += include/base.h \
            interface/input.h \
            interface/sound.h \
            interface/timer.h \
+		   include/vector.h \
 		   src/include/blob.h
 
 SOURCES += src/blob.cpp \

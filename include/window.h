@@ -22,7 +22,8 @@ private:
 	void keyPressEvent(QKeyEvent *event); 
 	void keyReleaseEvent(QKeyEvent *event); 
 
-	CBlob *blob;
+	CBlob *blob1;
+	CBlob *blob2;
 };
 
 #endif

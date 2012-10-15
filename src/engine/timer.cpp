@@ -74,9 +74,7 @@ void CTimer::Start()
     timespec t;
     clock_gettime(CLOCK_REALTIME, &t);
 
-    //m_ulStartTime = t.tv_sec + (t.tv_nsec / 1000000000.0f);
 	m_ulStartTime = (1000000000 * t.tv_sec) + t.tv_nsec;
-	qDebug() << m_ulStartTime;
 #endif
 	m_bStarted = true;
 }

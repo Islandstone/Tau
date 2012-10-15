@@ -5,7 +5,12 @@
 #include "input.h"
 
 TauWindow::TauWindow(QWidget* parent) : QGLWidget(parent) {
-	blob = new CBlob(); // TODO: Cleanup
+	blob1 = new CBlob(); // TODO: Cleanup
+	blob1->SetPos(30, 50);
+	blob1->SetInputKeys(KEY_W, KEY_A, KEY_S, KEY_D, KEY_C);
+	blob2 = new CBlob(); // TODO: Cleanup
+	blob2->SetPos(100, 50);
+	blob2->SetInputKeys(KEY_I, KEY_J, KEY_K, KEY_L, KEY_N);
 }
 
 void TauWindow::initializeGL() {
@@ -46,7 +51,8 @@ void TauWindow::initializeGL() {
 }
 
 void TauWindow::Think() {
-	blob->Think();
+	blob1->Think();
+	blob2->Think();
 }
 
 void TauWindow::Render() {
@@ -56,21 +62,10 @@ void TauWindow::Render() {
 void TauWindow::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-	glBegin(GL_QUADS);
-		glVertex3f(0.0, 0.0, 1.0);
-
-		glVertex3f(30, 0, 1.0);
-
-		glVertex3f(30, 30.0, 1.0);
-
-		glVertex3f(0.0, 30.0, 1.0);
-	glEnd();
-
 	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-
-	blob->Render();
+	blob1->Render();
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	blob2->Render();
 }
 
 void TauWindow::resizeGL(int width, int height) {
@@ -99,42 +94,6 @@ void TauWindow::resizeGL(int width, int height) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-
-/*
-void TauWindow::resizeGL(int width, int height) {
-    glViewport(0,0, width, height);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-	float viewwidth = 0.0f;
-	float viewheight = 0.0f;
-
-	// delta's from the center of the screen
-	float dx = 0.0f;
-	float dy = 0.0f;
-
-	if ( width >= height )
-	{
-		viewwidth = 100 * (float)width/(float)height;
-		viewheight = 100;	
-		dx = 0.5f * viewwidth - 50.0f;
-	}
-	else
-	{
-		viewwidth = 100;
-		viewheight = 100 * (float)height/(float)width;
-		dy = 0.5f * viewheight - 50.0f;
-	}
-	
-	gluOrtho2D(0, viewwidth, viewheight, 0);
-
-	glTranslatef(dx, dy, 0.0f);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-}
-*/
 
 void TauWindow::keyPressEvent(QKeyEvent *event) 
 {

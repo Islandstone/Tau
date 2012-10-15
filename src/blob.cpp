@@ -22,7 +22,7 @@ CBlob::CBlob() {
 void CBlob::Think() {
 	float dt = Timer()->CurrentTime() - m_flLastThinkTime;
 
-	if (dt < 0.01f) return;
+	//if (dt < 0.01f) return;
 
 	if (!m_bKeyHeld && Input()->KeyHeld(KEY_SPACE)) {
 		m_bKeyHeld = true;
@@ -30,10 +30,10 @@ void CBlob::Think() {
 	} else if (m_bKeyHeld && Input()->KeyReleased(KEY_SPACE)) {
 		m_bKeyHeld = false;
 
-		float mod = (Timer()->CurrentTime() - m_flKeyStartTime) * 0.2f;
+		float mod = (Timer()->CurrentTime() - m_flKeyStartTime) * 1.5f;
 
 		if (mod < 0.1f) mod = 0.1f;
-		if (mod > 2.0f) mod = 2.0f;
+		if (mod > 5.0f) mod = 5.0f;
 
 		if (Input()->KeyHeld(KEY_D)) {
 			speed_x += dt * mod * STEP_SIZE;
@@ -60,17 +60,25 @@ void CBlob::Think() {
 	x = x + speed_x * dt;
 	y = y + speed_y * dt;
 
-	if (x - 10 < 0)
+	if (x - 10 < 0) {
 		speed_x *= -1;
+		x = 10;
+	}
 
-	if ((x + 10) > 185)
+	if ((x + 10) > 150) {
 		speed_x *= -1;
+		x = 140;
+	}
 
-	if ((y - 10) < 0) 
+	if ((y - 10) < 0) {
 		speed_y *= -1;
+		y = 10;
+	}
 
-	if ((y + 10) > 100)
+	if ((y + 10) > 100) {
 		speed_y *= -1;
+		y = 90;
+	}
 
 	m_flLastThinkTime = Timer()->CurrentTime();
 }

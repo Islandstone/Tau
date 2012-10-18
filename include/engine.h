@@ -3,7 +3,6 @@
 
 #include "base.h"
 #include "game_systems.h"
-#include "game_objects.h"
 #include "sound.h"
 #include "window.h"
 
@@ -81,7 +80,6 @@ private:
 
     //std::vector<IGameObject*>   m_vecObjectList;
     std::vector<IGameSystem*>   m_vecGameSystems;
-	std::vector<IGameObject*> m_vObjects;
 };
 
 extern inline CEngine* Engine()

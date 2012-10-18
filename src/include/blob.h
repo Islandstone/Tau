@@ -2,7 +2,7 @@
 #define _BLOB_INCLUDE
 
 #include "vector.h"
-#include "game_objects.h"
+#include "game_object.h"
 
 class CBlob : public IGameObject
 {

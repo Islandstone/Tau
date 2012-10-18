@@ -2,7 +2,7 @@
 #define _PHYSICS_INCLUDE
 
 #include "game_systems.h"
-#include "game_objects.h"
+#include "game_object.h"
 #include <QVector>
 
 class CPhysics : public CGameSystem {

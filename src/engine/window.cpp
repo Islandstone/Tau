@@ -101,7 +101,6 @@ void TauWindow::keyReleaseEvent(QKeyEvent *event)
 	return;
     }*/
 
-	qDebug() << event;
 	int keycode = event->key();
 
 	Input()->SetKeyUp( keycode );

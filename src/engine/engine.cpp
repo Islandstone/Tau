@@ -17,6 +17,7 @@
 #include "timer.h"
 #include "physics.h"
 
+#include "console.h"
 //#include "script.h"
 
 void msleep( float msec )
@@ -108,6 +109,8 @@ void CEngine::Main()
 	//InitFormat();
 
     TauWindow window;
+	Console console(&window);
+
 	m_pWindow = &window;
     window.resize(1024, 568);
     window.show();

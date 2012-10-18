@@ -31,7 +31,8 @@ SOURCES += src/blob.cpp \
            src/engine/sound.cpp \
            src/engine/timer.cpp \
            src/engine/physics.cpp \
-           src/engine/window.cpp
+           src/engine/window.cpp \
+		   src/engine/console.cpp
 
 LIBS += -lrt -lGLU
 

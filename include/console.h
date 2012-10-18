@@ -3,6 +3,21 @@
 
 #include <QtGui>
 
+//#define CONSOLE_KEY Qt::Key_Pipe;
+
+class ConsoleInput : public QTextEdit {
+public:
+	ConsoleInput(QWidget* parent = NULL);
+	void keyPressEvent(QKeyEvent *event);
+private:
+};
+
+class ConsoleText : public QTextEdit {
+public:
+	ConsoleText(QWidget* parent = NULL);
+	void keyPressEvent(QKeyEvent* event);
+};
+
 class Console {
 public:
 	Console(QWidget *parent);
@@ -13,8 +28,8 @@ public:
 private:
 	QWidget* m_pWidget;
 	QVBoxLayout* m_pLayout;
-	QTextEdit* m_pText;
-	QTextEdit* m_pInput;
+	ConsoleText* m_pText;
+	ConsoleInput* m_pInput;
 
 	bool m_bVisible;
 };

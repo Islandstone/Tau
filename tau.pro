@@ -19,7 +19,8 @@ HEADERS += include/base.h \
            interface/sound.h \
            interface/timer.h \
 		   include/vector.h \
-		   src/include/blob.h
+		   src/include/blob.h \
+		   interface/physics.h
 
 SOURCES += src/blob.cpp \
            src/game.cpp \
@@ -29,6 +30,7 @@ SOURCES += src/blob.cpp \
            src/engine/main.cpp \
            src/engine/sound.cpp \
            src/engine/timer.cpp \
+           src/engine/physics.cpp \
            src/engine/window.cpp
 
 LIBS += -lrt -lGLU

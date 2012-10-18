@@ -15,6 +15,7 @@
 #include "sound.h"
 
 #include "timer.h"
+#include "physics.h"
 
 //#include "script.h"
 
@@ -52,9 +53,10 @@ bool CEngine::Init()
 void CEngine::CreateSystems()
 {
     AddSystem( Input() );
+	AddSystem( Physics() );
+
 	/*
     AddSystem( Sound() );
-	AddSystem( Physics() );
 	AddSystem( Script() );	
 	*/
 }

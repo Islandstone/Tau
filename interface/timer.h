@@ -1,7 +1,9 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-class CTimer
+#include "itimer.h"
+
+class CTimer : public ITimer
 {
 public:
     CTimer();
@@ -41,34 +43,9 @@ private:
 	unsigned long m_ulStartTime;
 };
 
-extern inline CTimer* Timer()
+extern inline ITimer* Timer()
 {
     return CTimer::GlobalTimer();
 }
-
-// TODO: Rewrite this a tiny bit to support only in or out fade
-// Utility class to create in/out fades.
-class CFadeTimer : public CTimer
-{
-public:
-
-    CFadeTimer(float total_duration = 5.0f, float fade = 1.5f);
-    
-    void Start();
-    float GetModifier();
-
-    bool IsFinished() { return CurrentTime() >= m_flDuration; }
-
-protected:
-private:
-
-    float m_flFadeStart;
-    float m_flFadeEnd;
-    float m_flDuration;
-    float m_flFade;
-
-    float m_flEndTime;
-    bool m_bSecondStage;
-};
 
 #endif // TIMER_H

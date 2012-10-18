@@ -97,22 +97,21 @@ void TauWindow::resizeGL(int width, int height) {
 
 void TauWindow::keyPressEvent(QKeyEvent *event) 
 {
-    if ( event->isAutoRepeat() )
+    /*if ( event->isAutoRepeat() )
     {
         return;
-    }
+    }*/
 
 	int keycode = event->key();
-
     Input()->SetKeyDown( keycode );
 }
 
 void TauWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->isAutoRepeat() )
+    /*if (event->isAutoRepeat() )
     {
         return;
-    }
+    }*/
 
     int keycode = event->key();
 

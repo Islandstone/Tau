@@ -17,13 +17,14 @@ CBlob::CBlob() {
 	m_kFire = -1;
 }
 
-#define STEP_SIZE 10000
+#define STEP_SIZE 100
 #define DAMPING 100
+#define STEPSIZE (1./60)
 
 void CBlob::Think() {
 	float dt = Timer()->CurrentTime() - m_flLastThinkTime;
 
-	if (dt < 0.01f) return;
+	//if (dt < 0.01f) return;
 
 	if (!m_bKeyHeld && Input()->KeyHeld(m_kFire)) {
 		m_bKeyHeld = true;
@@ -33,58 +34,55 @@ void CBlob::Think() {
 
 		float mod = (Timer()->CurrentTime() - m_flKeyStartTime) * 1.5f;
 
-		if (mod < 0.1f) mod = 0.1f;
-		if (mod > 5.0f) mod = 5.0f;
-
 		if (Input()->KeyHeld(m_kRight)) {
-			//speed_x += dt * mod * STEP_SIZE;
-			m_vSpeed.x += dt * mod * STEP_SIZE;
+			m_vSpeed.x += mod * STEP_SIZE;
 		}  
 
 		if (Input()->KeyHeld(m_kLeft)) {
-			//speed_x -= dt * mod * STEP_SIZE;
-			m_vSpeed.x -= dt * mod * STEP_SIZE;
+			m_vSpeed.x -= mod * STEP_SIZE;
 		}
 
 		if (Input()->KeyHeld(m_kUp)) {
-			m_vSpeed.y -= dt * mod * STEP_SIZE;
+			m_vSpeed.y -= mod * STEP_SIZE;
 		}
 
 		if (Input()->KeyHeld(m_kDown)) {
-			m_vSpeed.y += dt * mod * STEP_SIZE;
+			m_vSpeed.y += mod * STEP_SIZE;
 		}
 	}
-	else 
-	{
-		m_vSpeed *= 1.0 - (1.0 / DAMPING);
-	}
 
-	//m_vPos = m_vPos + (dt * m_vSpeed);
 	Vector delta = m_vSpeed;
-	delta *= dt;
-	m_vPos += delta;
+	delta *= STEPSIZE;
+	float cTime = Timer()->CurrentTime();
+	while ((m_flLastThinkTime + STEPSIZE) < cTime) {
+		m_vSpeed *= 1.0-(1.0/DAMPING);
 
-	if (m_vPos.x - 10 < 0) {
-		m_vSpeed.x *= -1;
-		m_vPos.x = 10;
+		//m_vPos = m_vPos + (dt * m_vSpeed);
+		m_vPos += delta;
+
+		if (m_vPos.x - 10 < 0) {
+			m_vSpeed.x *= -1;
+			m_vPos.x = 10;
+		}
+
+		if ((m_vPos.x + 10) > 150) {
+			m_vSpeed.x *= -1;
+			m_vPos.x = 140;
+		}
+
+		if ((m_vPos.y - 10) < 0) {
+			m_vSpeed.y *= -1;
+			m_vPos.y = 10;
+		}
+
+		if ((m_vPos.y + 10) > 100) {
+			m_vSpeed.y *= -1;
+			m_vPos.y = 90;
+		}
+
+
+		m_flLastThinkTime += STEPSIZE;
 	}
-
-	if ((m_vPos.x + 10) > 150) {
-		m_vSpeed.x *= -1;
-		m_vPos.x = 140;
-	}
-
-	if ((m_vPos.y - 10) < 0) {
-		m_vSpeed.y *= -1;
-		m_vPos.y = 10;
-	}
-
-	if ((m_vPos.y + 10) > 100) {
-		m_vSpeed.y *= -1;
-		m_vPos.y = 90;
-	}
-
-	m_flLastThinkTime = Timer()->CurrentTime();
 }
 
 #define CIRCLE_SEGMENTS 30

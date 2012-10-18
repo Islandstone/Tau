@@ -67,13 +67,15 @@ void CInput::PostRender()
 {
     for (int i = 0; i < 255; i++)
     {
-        m_pPreviousState[i] = m_pCurrentState[i];
+	m_pPreviousState[i] = m_pCurrentState[i];
+	//m_pCurrentState[i] = 0;
     }
 }
 
 void CInput::SetKeyUp(int keycode)
 {
 	int key = keycode;
+	//qDebug() << "up" << keycode;
 	if (key >= 255) 
 	{
 		key -= 0x01000000;
@@ -92,7 +94,8 @@ void CInput::SetKeyUp(int keycode)
 void CInput::SetKeyDown(int keycode)
 {
 	int key = keycode;
-	if (key >= 255) 
+	//qDebug() << "down" << keycode;
+	if (key >= 255)
 	{
 		key -= 0x01000000;
 		if (key >= 255) { return; }

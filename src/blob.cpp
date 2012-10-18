@@ -16,7 +16,7 @@ CBlob::CBlob() {
 	m_kFire = -1;
 }
 
-#define STEP_SIZE 100
+#define FORCE 100
 #define DAMPING 100
 
 void CBlob::Think() {
@@ -29,24 +29,30 @@ void CBlob::Think() {
 	} else if (m_bKeyHeld && Input()->KeyReleased(m_kFire)) {
 		m_bKeyHeld = false;
 
-		float mod = (Timer()->CurrentTime() - m_flKeyStartTime) * 1.5f;
+		float mod = (Timer()->CurrentTime() - m_flKeyStartTime);
+		Vector speedMod;
 
 		if (Input()->KeyDown(m_kRight)) {
-			qDebug() << "right";
-			m_vSpeed.x += mod * STEP_SIZE;
+			speedMod.x += 1;
 		}  
 
 		if (Input()->KeyDown(m_kLeft)) {
-			m_vSpeed.x -= mod * STEP_SIZE;
+			speedMod.x -= 1;
 		}
 
 		if (Input()->KeyDown(m_kUp)) {
-			m_vSpeed.y -= mod * STEP_SIZE;
+			speedMod.y -= 1;
 		}
 
 		if (Input()->KeyDown(m_kDown)) {
-			m_vSpeed.y += mod * STEP_SIZE;
+			speedMod.y += 1;
 		}
+		if (speedMod.len() < 0.001) {
+			return;
+		}
+		speedMod = speedMod.normalize();
+		speedMod *= mod * FORCE;
+		m_vSpeed += speedMod;
 	}
 
 

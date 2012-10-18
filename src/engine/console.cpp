@@ -1,11 +1,45 @@
 #include "console.h"
 
+ConsoleInput::ConsoleInput(QWidget* parent) : QTextEdit(parent) {
+
+}
+
+void ConsoleInput::keyPressEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+		event->ignore();
+	}
+	else if (event->key() == Qt::Key_PageUp) {
+		event->ignore();
+	}
+	else {
+		QTextEdit::keyPressEvent(event);
+	}
+}
+
+ConsoleText::ConsoleText(QWidget* parent) : QTextEdit(parent) {
+
+}
+
+void ConsoleText::keyPressEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+		event->ignore();
+	}
+	else if (event->key() == Qt::Key_PageUp) {
+		event->ignore();
+	}
+	else {
+		QTextEdit::keyPressEvent(event);
+	}
+}
+
 Console::Console(QWidget* parent) {
 	m_pWidget = new QWidget();
 	m_pWidget->setParent(parent);
 
-	m_pText = new QTextEdit();
-	m_pInput = new QTextEdit();
+	m_pText = new ConsoleText();
+	m_pInput = new ConsoleInput();
 	m_pInput->setFixedHeight(25); // HACKHACK
 
 	m_pLayout = new QVBoxLayout(m_pWidget);

@@ -74,8 +74,13 @@ bool CInput::KeyUp(int keycode)
 	return (!m_pCurrentState.contains(keycode));
 }
 
+bool CInput::KeyDown(int keycode)
+{
+	return m_pCurrentState.contains(keycode);
+}
+
 bool CInput::KeyPressed(int keycode) {
-	return (m_pCurrentState.contains(keycode));
+	return (m_pCurrentState.contains(keycode) && !m_pPreviousState.contains(keycode));
 }
 
 

@@ -37,8 +37,8 @@ public:
     void SetKeyDown(int keycode);
 
     bool KeyUp(int keycode);
+    bool KeyDown(int keycode);
     bool KeyPressed(int keycode);
-    bool KeyHeld(int keycode);
     bool KeyReleased(int keycode);
 
 protected:

@@ -30,21 +30,21 @@ void CBlob::Think() {
 		m_bKeyHeld = false;
 
 		float mod = (Timer()->CurrentTime() - m_flKeyStartTime) * 1.5f;
-		qDebug() << mod;
 
-		if (Input()->KeyPressed(m_kRight)) {
+		if (Input()->KeyDown(m_kRight)) {
+			qDebug() << "right";
 			m_vSpeed.x += mod * STEP_SIZE;
 		}  
 
-		if (Input()->KeyPressed(m_kLeft)) {
+		if (Input()->KeyDown(m_kLeft)) {
 			m_vSpeed.x -= mod * STEP_SIZE;
 		}
 
-		if (Input()->KeyPressed(m_kUp)) {
+		if (Input()->KeyDown(m_kUp)) {
 			m_vSpeed.y -= mod * STEP_SIZE;
 		}
 
-		if (Input()->KeyPressed(m_kDown)) {
+		if (Input()->KeyDown(m_kDown)) {
 			m_vSpeed.y += mod * STEP_SIZE;
 		}
 	}
@@ -59,7 +59,6 @@ void CBlob::Act() {
 
 	//m_vPos = m_vPos + (dt * m_vSpeed);
 	m_vPos += delta;
-
 	if (m_vPos.x - 10 < 0) {
 		m_vSpeed.x *= -1;
 		m_vPos.x = 10;

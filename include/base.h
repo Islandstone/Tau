@@ -4,6 +4,7 @@
 #include <string>
 
 typedef std::string String;
+#define STEPSIZE (1./60)
 
 #define ARRAYSIZE(array) ( sizeof(array) / sizeof(array[0]) )
 

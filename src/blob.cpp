@@ -7,7 +7,6 @@
 #include "blob.h"
 
 CBlob::CBlob() {
-	m_flLastThinkTime = 0.0f;
 	m_bKeyHeld = false;
 	m_flKeyStartTime = 0.0f;
 	m_kUp = -1;
@@ -19,10 +18,8 @@ CBlob::CBlob() {
 
 #define STEP_SIZE 100
 #define DAMPING 100
-#define STEPSIZE (1./60)
 
 void CBlob::Think() {
-	float dt = Timer()->CurrentTime() - m_flLastThinkTime;
 
 	//if (dt < 0.01f) return;
 
@@ -51,38 +48,37 @@ void CBlob::Think() {
 		}
 	}
 
+
+}
+
+void CBlob::Act() {
 	Vector delta = m_vSpeed;
 	delta *= STEPSIZE;
-	float cTime = Timer()->CurrentTime();
-	while ((m_flLastThinkTime + STEPSIZE) < cTime) {
-		m_vSpeed *= 1.0-(1.0/DAMPING);
+	m_vSpeed *= 1.0-(1.0/DAMPING);
 
-		//m_vPos = m_vPos + (dt * m_vSpeed);
-		m_vPos += delta;
+	//m_vPos = m_vPos + (dt * m_vSpeed);
+	m_vPos += delta;
 
-		if (m_vPos.x - 10 < 0) {
-			m_vSpeed.x *= -1;
-			m_vPos.x = 10;
-		}
-
-		if ((m_vPos.x + 10) > 150) {
-			m_vSpeed.x *= -1;
-			m_vPos.x = 140;
-		}
-
-		if ((m_vPos.y - 10) < 0) {
-			m_vSpeed.y *= -1;
-			m_vPos.y = 10;
-		}
-
-		if ((m_vPos.y + 10) > 100) {
-			m_vSpeed.y *= -1;
-			m_vPos.y = 90;
-		}
-
-
-		m_flLastThinkTime += STEPSIZE;
+	if (m_vPos.x - 10 < 0) {
+		m_vSpeed.x *= -1;
+		m_vPos.x = 10;
 	}
+
+	if ((m_vPos.x + 10) > 150) {
+		m_vSpeed.x *= -1;
+		m_vPos.x = 140;
+	}
+
+	if ((m_vPos.y - 10) < 0) {
+		m_vSpeed.y *= -1;
+		m_vPos.y = 10;
+	}
+
+	if ((m_vPos.y + 10) > 100) {
+		m_vSpeed.y *= -1;
+		m_vPos.y = 90;
+	}
+
 }
 
 #define CIRCLE_SEGMENTS 30
@@ -107,6 +103,13 @@ void CBlob::SetInputKeys(int up, int left, int down, int right, int fire) {
 	m_kFire = fire;
 }
 
+void CBlob::SetColor(float r, float g, float b, float a) {
+	m_flRed = r;
+	m_flGreen = g;
+	m_flBlue = b;
+	m_flAlpha = a;
+}
+
 void CBlob::SetPos(float x, float y) {
 	/*
 	this->x = x; this->y = y;
@@ -115,5 +118,6 @@ void CBlob::SetPos(float x, float y) {
 }
 
 void CBlob::Render() {
+	glColor4f(m_flRed, m_flGreen, m_flBlue, m_flAlpha);
 	drawCircle(m_vPos.x, m_vPos.y, 10);
 }

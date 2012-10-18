@@ -2,6 +2,8 @@
 #define _PHYSICS_INCLUDE
 
 #include "game_systems.h"
+#include "game_objects.h"
+#include <QVector>
 
 class CPhysics : public CGameSystem {
 	CPhysics();
@@ -19,7 +21,9 @@ public:
 	//void PostRender();
 	
 	const String GetName() { return String("Physics"); }
+	QVector<IGameObject*> m_vObjects;
 private:
+	float m_flLastThinkTime;
 };
 
 inline extern CPhysics* Physics() {

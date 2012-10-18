@@ -14,6 +14,7 @@ two keys could share the same internal key code, but this has not been tested.
 */
 
 #include "game_systems.h"
+#include <QSet>
 
 class CInput : public CGameSystem
 {
@@ -43,11 +44,8 @@ public:
 protected:
 private:
 
-    char *m_pCurrentState;
-    char *m_pPreviousState;
-
-    char m_szKeyBuffer1[255];
-    char m_szKeyBuffer2[255];
+    QSet<int> m_pCurrentState;
+    QSet<int> m_pPreviousState;
 };
 
 extern inline CInput* Input()

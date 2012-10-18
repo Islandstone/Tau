@@ -129,7 +129,7 @@ void CEngine::Main()
         {
             break;
         }
-		else if (Input()->KeyHeld( KEY_ALT ) && ( Input()->KeyReleased( KEY_ENTER ) || Input()->KeyReleased( KEY_RETURN ) ) )
+		else if (Input()->KeyPressed(KEY_ALT ) && ( Input()->KeyReleased( KEY_ENTER ) || Input()->KeyReleased( KEY_RETURN ) ) )
 		{
 			if ( window.isFullScreen() ) 
 			{

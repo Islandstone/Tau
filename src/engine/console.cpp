@@ -7,10 +7,21 @@ ConsoleInput::ConsoleInput(QWidget* parent) : QTextEdit(parent) {
 void ConsoleInput::keyPressEvent(QKeyEvent *event)
 {
 	if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+		Console()->SendCommand(toPlainText().trimmed());
+		setText("");
 		event->ignore();
 	}
 	else if (event->key() == Qt::Key_PageUp) {
 		event->ignore();
+	}
+	else if (event->key() == Qt::Key_Up) {
+		qDebug() << "Key up";
+	}
+	else if (event->key() == Qt::Key_Down) {
+		qDebug() << "Key down";
+	}
+	else if (event->key() == Qt::Key_Tab) {
+		return;
 	}
 	else {
 		QTextEdit::keyPressEvent(event);
@@ -18,7 +29,7 @@ void ConsoleInput::keyPressEvent(QKeyEvent *event)
 }
 
 ConsoleText::ConsoleText(QWidget* parent) : QTextEdit(parent) {
-
+	setReadOnly(true);
 }
 
 void ConsoleText::keyPressEvent(QKeyEvent *event)
@@ -34,7 +45,11 @@ void ConsoleText::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-Console::Console(QWidget* parent) {
+ConsoleWidget::ConsoleWidget() {
+	
+}
+
+void ConsoleWidget::InitWidgets(QWidget* parent) {
 	m_pWidget = new QWidget();
 	m_pWidget->setParent(parent);
 
@@ -45,10 +60,6 @@ Console::Console(QWidget* parent) {
 	m_pLayout = new QVBoxLayout(m_pWidget);
 	m_pLayout->addWidget(m_pText);
 	m_pLayout->addWidget(m_pInput);
-	
-	// Default text
-	m_pText->setText("Text");
-	m_pInput->setText("Input");
 
 	// Set scrollbar policy
 	m_pText->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -75,7 +86,7 @@ Console::Console(QWidget* parent) {
 	m_bVisible = false;
 }
 
-void Console::Toggle() {
+void ConsoleWidget::Toggle() {
 	if (m_bVisible) {
 		Hide();
 	} else {
@@ -83,12 +94,17 @@ void Console::Toggle() {
 	}
 }
 
-void Console::Show() {
+void ConsoleWidget::Show() {
 	m_pWidget->show();
+	m_pInput->setFocus();
 	m_bVisible = true;
 }
 
-void Console::Hide() {
+void ConsoleWidget::Hide() {
 	m_pWidget->hide();
 	m_bVisible = false;
+}
+
+void ConsoleWidget::SendCommand(QString str) {
+	m_pText->setText(m_pText->toPlainText() + "\n" + str);
 }

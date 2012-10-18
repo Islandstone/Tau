@@ -21,7 +21,8 @@ HEADERS += include/base.h \
            interface/timer.h \
 		   include/vector.h \
 		   src/include/blob.h \
-		   interface/physics.h
+		   interface/physics.h \
+		   include/console.h
 
 SOURCES += src/blob.cpp \
            src/game.cpp \

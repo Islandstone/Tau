@@ -115,7 +115,8 @@ void CEngine::Main()
     window.show();
 	window.raise(); // Bring to front
 
-	Console console(&window);
+	//Console console(&window);
+	Console()->InitWidgets(&window);
 
 	//Script()->PostInit();
 
@@ -141,8 +142,8 @@ void CEngine::Main()
 			}
 		}
 
-		if ( Input()->KeyPressed( KEY_PAGEUP )) {
-			console.Toggle();
+		if ( Input()->KeyReleased( KEY_PAGEUP )) {
+			Console()->Toggle();
 		}
         
 		window.Render();

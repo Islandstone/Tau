@@ -23,27 +23,28 @@ void CBlob::Think() {
 
 	//if (dt < 0.01f) return;
 
-	if (!m_bKeyHeld && Input()->KeyHeld(m_kFire)) {
+	if (!m_bKeyHeld && Input()->KeyPressed(m_kFire)) {
 		m_bKeyHeld = true;
 		m_flKeyStartTime = Timer()->CurrentTime();
 	} else if (m_bKeyHeld && Input()->KeyReleased(m_kFire)) {
 		m_bKeyHeld = false;
 
 		float mod = (Timer()->CurrentTime() - m_flKeyStartTime) * 1.5f;
+		qDebug() << mod;
 
-		if (Input()->KeyHeld(m_kRight)) {
+		if (Input()->KeyPressed(m_kRight)) {
 			m_vSpeed.x += mod * STEP_SIZE;
 		}  
 
-		if (Input()->KeyHeld(m_kLeft)) {
+		if (Input()->KeyPressed(m_kLeft)) {
 			m_vSpeed.x -= mod * STEP_SIZE;
 		}
 
-		if (Input()->KeyHeld(m_kUp)) {
+		if (Input()->KeyPressed(m_kUp)) {
 			m_vSpeed.y -= mod * STEP_SIZE;
 		}
 
-		if (Input()->KeyHeld(m_kDown)) {
+		if (Input()->KeyPressed(m_kDown)) {
 			m_vSpeed.y += mod * STEP_SIZE;
 		}
 	}

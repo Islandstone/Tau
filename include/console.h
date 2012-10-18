@@ -35,9 +35,16 @@ public:
 	void Hide();
 	void Toggle();
 
+	void Write(QString str);
+
 	void SendCommand(QString str);
+
+	//QStringList GetArgs() { return m_slArgs; }
+
 private:
-	QSet<ConVar> m_vConvars;
+	void Execute(QString command, QStringList args);
+
+	QHash<QString, ConVar*> m_vConvars;
 
 	QWidget* m_pWidget;
 	QVBoxLayout* m_pLayout;
@@ -68,7 +75,7 @@ public:
 private:
 	int m_iInt;
 	QString m_sString;
-	
+	QStringList m_slArgs;
 };
 
 #endif

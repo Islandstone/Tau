@@ -105,6 +105,58 @@ void ConsoleWidget::Hide() {
 	m_bVisible = false;
 }
 
+void ConsoleWidget::Write(QString str) {
+	m_pText->append(str);
+}
+
+//#define DEBUG_COMMAND_SPLIT
 void ConsoleWidget::SendCommand(QString str) {
-	m_pText->setText(m_pText->toPlainText() + "\n" + str);
+	Write("] " + str);
+
+	QRegExp rx("([^ ]+|\"[^\"]+\")");
+	QString tmp;
+	QString command;
+	QStringList args;
+
+	int pos = 0;
+	while ((pos = rx.indexIn(str, pos)) != -1) {
+		tmp = rx.cap(1);
+
+		if (tmp.startsWith('\"') && tmp.endsWith('\"')) {
+			tmp = tmp.mid(1, tmp.size()-2);
+		}
+
+		if (pos == 0) {
+			command = tmp;
+		} else {
+			args << tmp;
+		}
+		
+		pos += rx.matchedLength();
+	}
+
+#ifndef DEBUG_COMMAND_SPLIT
+	Execute(command, args);
+#else
+	Write("String split into the following parts:");
+
+	Write("] " << command);
+	for (int i = 0; i < args.size(); i++) {
+		Write(args[i]);
+	}
+	Write("------------------------------END------------------------------");
+#endif
+}
+
+void ConsoleWidget::Execute(QString command, QStringList args) {
+	//m_slArgs = args;
+
+	if (!m_vConvars.contains(command)) {
+		Write("No such command: " + command );
+		return;
+	}
+
+	ConVar* var = m_vConvars.value(command);
+
+
 }

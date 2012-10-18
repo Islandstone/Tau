@@ -109,12 +109,13 @@ void CEngine::Main()
 	//InitFormat();
 
     TauWindow window;
-	Console console(&window);
 
 	m_pWindow = &window;
     window.resize(1024, 568);
     window.show();
 	window.raise(); // Bring to front
+
+	Console console(&window);
 
 	//Script()->PostInit();
 
@@ -138,6 +139,10 @@ void CEngine::Main()
 			{
 				window.showFullScreen();
 			}
+		}
+
+		if ( Input()->KeyPressed( KEY_PAGEUP )) {
+			console.Toggle();
 		}
         
 		window.Render();

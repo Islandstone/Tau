@@ -158,5 +158,24 @@ void ConsoleWidget::Execute(QString command, QStringList args) {
 
 	ConVar* var = m_vConvars.value(command);
 
+	if (args.isEmpty()) {
+		Write(command + " " + var->GetString());
+		return;
+	} else {
+		var->Set(args[0]);
+	}
+}
 
+void ConsoleWidget::AddCommand(ConVar* cv) {
+	m_vConvars.insert(cv->GetName(), cv);
+}
+
+ConVar::ConVar(QString name, bool def) {
+	m_sName = name;
+	m_varValue.setValue(def);
+	Console()->AddCommand(this);
+}
+
+bool ConVar::GetBool() {
+	return m_varValue.toBool();
 }

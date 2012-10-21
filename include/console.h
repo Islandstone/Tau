@@ -37,6 +37,7 @@ public:
 
 	void Write(QString str);
 
+	void AddCommand(ConVar* cv);
 	void SendCommand(QString str);
 
 	//QStringList GetArgs() { return m_slArgs; }
@@ -64,18 +65,20 @@ public:
 	ConVar(QString name, QString def);
 	ConVar(QString name, bool def);
 
-	int GetInt() { return m_iInt; }
-	QString GetString() { return m_sString; }
-	int GetBool() { return m_iInt != 0; }
+	QString GetName() { return m_sName; }
 
-	void SetInt(int i);
-	void SetString(QString s);
-	void SetBool(bool b);
+	int GetInt() { return m_varValue.toInt(); }
+	QString GetString() { return m_varValue.toString(); }
+	//int GetBool() { return m_iInt != 0; }
+	bool GetBool();
+
+	void SetInt(int i) { m_varValue.setValue(i); }
+	void Set(QString s) { m_varValue.setValue(s); }
+	void SetBool(bool b) { m_varValue.setValue(b); }
 
 private:
-	int m_iInt;
-	QString m_sString;
-	QStringList m_slArgs;
+	QString m_sName;
+	QVariant m_varValue;
 };
 
 #endif

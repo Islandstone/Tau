@@ -4,8 +4,15 @@
 
 #include "input.h"
 #include "physics.h"
+#include "console.h"
+#include "timer.h"
+
+ConVar cl_showfps("cl_showfps", false);
 
 TauWindow::TauWindow(QWidget* parent) : QGLWidget(parent) {
+	m_flFPS = 0.0f;
+	m_iFrameCount = 0;
+	m_flLastTime = 0.0f;
 }
 
 void TauWindow::initializeGL() {
@@ -51,9 +58,31 @@ void TauWindow::paintGL() {
 	for (int i = 0; i < tmp.size(); i++) {
 		tmp[i]->Render();
 	}
+
+	RenderFps();
+
 	glFlush();
 	glFinish();
 	swapBuffers();
+}
+
+void TauWindow::RenderFps() {
+	m_iFrameCount++;
+	float curtime = Timer()->CurrentTime();
+	float dt = curtime - m_flLastTime;
+
+	if (dt >= 1.0f) {
+		m_flFPS = (m_iFrameCount / dt);
+		m_flLastTime = curtime;
+		m_iFrameCount = 0;
+	} 
+
+	if (cl_showfps.GetBool() && m_flFPS != 0.0f) {
+		QString str;
+		str.sprintf("%.2f fps (%.5f ms), time: %.2f", m_flFPS, 1.0f/m_flFPS, curtime);
+
+		renderText(1, 10, str);
+	}
 }
 
 void TauWindow::resizeGL(int width, int height) {

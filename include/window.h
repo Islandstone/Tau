@@ -14,6 +14,7 @@ public:
 	void Think();
 	void Render();
 
+	void RenderFps();
 private:
 	virtual void initializeGL();
 	virtual void paintGL();
@@ -23,6 +24,9 @@ private:
 	void keyReleaseEvent(QKeyEvent *event); 
 
 	float m_flLastThinkTime;
+	float m_flLastTime;
+	int m_iFrameCount;
+	float m_flFPS;
 };
 
 #endif
